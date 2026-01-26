@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Agent - AI Analysis</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f5f5; }
+        .navbar { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 0 20px; }
+        .nav-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 16px 0; }
+        .nav-brand { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: bold; color: #fc4c02; }
+        .nav-user { display: flex; align-items: center; gap: 12px; }
+        .nav-user img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #fc4c02; }
+        .logout-btn { padding: 8px 16px; background-color: #fc4c02; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 30px; background: white; padding: 8px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .tab { flex: 1; padding: 16px 24px; background: transparent; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; color: #666; cursor: pointer; }
+        .tab.active { background: linear-gradient(135deg, #fc4c02 0%, #d84315 100%); color: white; }
+        .tab-content { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 30px; max-height: 800px; overflow-y: auto; }
+        h2 { text-align: center; margin-bottom: 8px; color: #333; font-size: 28px; }
+        .subtitle { text-align: center; color: #666; font-size: 16px; margin-bottom: 32px; }
+        .section { background: white; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .section h3 { margin-bottom: 8px; color: #333; font-size: 22px; }
+        .section-desc { color: #666; margin-bottom: 20px; font-size: 14px; }
+        .goal-inputs { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end; margin-bottom: 24px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; font-size: 14px; }
+        .time-input { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; font-family: monospace; }
+        .assess-btn { padding: 12px 24px; background-color: #fc4c02; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; }
+        .goal-result { margin-top: 24px; border-radius: 12px; overflow: hidden; border: 2px solid #e0e0e0; }
+        .result-header { padding: 20px; background: #4caf50; color: white; display: flex; justify-content: space-between; align-items: center; }
+        .confidence-badge { background: rgba(255, 255, 255, 0.3); padding: 8px 16px; border-radius: 20px; font-weight: 600; }
+        .result-content { padding: 20px; background: white; }
+        .result-content p { margin-bottom: 12px; line-height: 1.6; }
+        .steps-list { margin: 12px 0 0 20px; }
+        .steps-list li { margin-bottom: 8px; line-height: 1.5; }
+        .workouts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .workout-category h4 { margin-bottom: 16px; color: #333; font-size: 18px; }
+        .workout-card { background: #f9f9f9; border-radius: 8px; padding: 16px; margin-bottom: 12px; border-left: 4px solid #fc4c02; }
+        .workout-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .workout-name { font-weight: 600; color: #333; }
+        .effectiveness-badge { padding: 4px 12px; border-radius: 12px; color: white; font-weight: 600; font-size: 14px; }
+        .green { background: #4caf50; }
+        .red { background: #f44336; }
+        .workout-details { margin-bottom: 12px; font-size: 13px; color: #666; }
+        .workout-reason { font-size: 14px; color: #333; font-style: italic; padding-top: 12px; border-top: 1px solid #e0e0e0; }
+        .advice-list { display: flex; flex-direction: column; gap: 16px; }
+        .advice-card { display: flex; gap: 16px; padding: 16px; background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%); border-radius: 8px; border-left: 4px solid #fc4c02; }
+        .advice-number { flex-shrink: 0; width: 32px; height: 32px; background: #fc4c02; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+        .advice-content { flex: 1; line-height: 1.6; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <span>🏃</span>
+                <span>Running Agent</span>
+            </div>
+            <div class="nav-user">
+                <img src="https://via.placeholder.com/40/fc4c02/ffffff?text=JR" alt="John Runner">
+                <span style="font-weight: 600;">John Runner</span>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="tabs">
+            <button class="tab">📊 Activities</button>
+            <button class="tab">⚡ Best Times</button>
+            <button class="tab active">🤖 AI Analysis</button>
+        </div>
+
+        <div class="tab-content">
+            <h2>🏃 AI-Powered Training Analysis</h2>
+            <p class="subtitle">Get personalized insights and improvement recommendations based on your training data</p>
+
+            <div class="section">
+                <h3>🎯 Goal Assessment</h3>
+                <p class="section-desc">Is your goal realistic? Let AI help you find out!</p>
+                
+                <div class="goal-inputs">
+                    <div class="input-group">
+                        <label>Current Marathon Time (HH:MM:SS):</label>
+                        <input type="text" class="time-input" value="3:24:00">
+                    </div>
+                    <div class="input-group">
+                        <label>Target Marathon Time (HH:MM:SS):</label>
+                        <input type="text" class="time-input" value="3:15:00">
+                    </div>
+                    <button class="assess-btn">Assess My Goal</button>
+                </div>
+
+                <div class="goal-result">
+                    <div class="result-header">
+                        <h4 style="margin: 0; font-size: 20px;">✅ Goal is Realistic!</h4>
+                        <div class="confidence-badge">Confidence: 75%</div>
+                    </div>
+                    <div class="result-content">
+                        <p><strong>Time Frame:</strong> 6-9 months with consistent training</p>
+                        <p><strong>Analysis:</strong> A 3:24 to 3:15 marathon represents a 4.4% improvement, which is achievable with focused training. Your recent training paces suggest you have the aerobic base. Key focus areas: speed work, race-pace practice, and consistent weekly mileage of 70-80km.</p>
+                        <h5 style="margin: 20px 0 12px 0; color: #333;">Recommended Steps:</h5>
+                        <ol class="steps-list">
+                            <li>Build weekly mileage to 70-80km over next 8 weeks</li>
+                            <li>Add weekly tempo run at goal marathon pace (4:37/km)</li>
+                            <li>Include weekly interval session (e.g., 8x800m at 5K pace)</li>
+                            <li>Progressive long runs up to 32km with last 10km at marathon pace</li>
+                            <li>Taper properly for 3 weeks before goal race</li>
+                            <li>Consider 2-3 half marathons as tune-up races</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>💪 Training Effectiveness Analysis</h3>
+                <p class="section-desc">Your training shows good consistency but needs more structured intensity work</p>
+
+                <div class="workouts-grid">
+                    <div class="workout-category">
+                        <h4>✨ Most Effective Workouts</h4>
+                        
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <span class="workout-name">Progressive Long Run</span>
+                                <span class="effectiveness-badge green">92%</span>
+                            </div>
+                            <div class="workout-details">
+                                <p><strong>Date:</strong> Dec 20, 2025</p>
+                                <p><strong>Distance:</strong> 22.50 km | <strong>Time:</strong> 1:52:30 | <strong>Pace:</strong> 5:00/km</p>
+                            </div>
+                            <p class="workout-reason">Progressive long run with negative splits shows excellent endurance building</p>
+                        </div>
+
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <span class="workout-name">Tempo Run at Goal Pace</span>
+                                <span class="effectiveness-badge green">88%</span>
+                            </div>
+                            <div class="workout-details">
+                                <p><strong>Date:</strong> Dec 15, 2025</p>
+                                <p><strong>Distance:</strong> 15.00 km | <strong>Time:</strong> 1:11:15</p>
+                            </div>
+                            <p class="workout-reason">Tempo run at target pace demonstrates race-specific fitness</p>
+                        </div>
+
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <span class="workout-name">Easy Recovery Run</span>
+                                <span class="effectiveness-badge green">85%</span>
+                            </div>
+                            <div class="workout-details">
+                                <p><strong>Date:</strong> Dec 17, 2025</p>
+                                <p><strong>Distance:</strong> 8.00 km | <strong>Time:</strong> 44:00</p>
+                            </div>
+                            <p class="workout-reason">Recovery run at proper easy pace supports adaptation</p>
+                        </div>
+                    </div>
+
+                    <div class="workout-category">
+                        <h4>⚠️ Least Effective Workouts</h4>
+                        
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <span class="workout-name">Easy Run Too Fast</span>
+                                <span class="effectiveness-badge red">45%</span>
+                            </div>
+                            <div class="workout-details">
+                                <p><strong>Date:</strong> Dec 12, 2025</p>
+                                <p><strong>Distance:</strong> 10.00 km | <strong>Time:</strong> 44:00</p>
+                            </div>
+                            <p class="workout-reason">Too fast for easy run, preventing proper recovery</p>
+                        </div>
+
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <span class="workout-name">Inconsistent Pace Run</span>
+                                <span class="effectiveness-badge red">40%</span>
+                            </div>
+                            <div class="workout-details">
+                                <p><strong>Date:</strong> Dec 10, 2025</p>
+                                <p><strong>Distance:</strong> 12.00 km | <strong>Time:</strong> 58:00</p>
+                            </div>
+                            <p class="workout-reason">Inconsistent pacing throughout, lacks specific purpose</p>
+                        </div>
+
+                        <div class="workout-card">
+                            <div class="workout-header">
+                                <span class="workout-name">No Warmup Intervals</span>
+                                <span class="effectiveness-badge red">35%</span>
+                            </div>
+                            <div class="workout-details">
+                                <p><strong>Date:</strong> Dec 8, 2025</p>
+                                <p><strong>Distance:</strong> 8.00 km | <strong>Time:</strong> 35:20</p>
+                            </div>
+                            <p class="workout-reason">Inadequate warmup before hard effort increases injury risk</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>🚀 How to Get Faster</h3>
+                <p class="section-desc">Personalized recommendations based on your training</p>
+                
+                <div class="advice-list">
+                    <div class="advice-card">
+                        <div class="advice-number">1</div>
+                        <div class="advice-content">Add interval training: 1x per week doing 6-10 x 800m at 5K pace with 90sec recovery</div>
+                    </div>
+                    <div class="advice-card">
+                        <div class="advice-number">2</div>
+                        <div class="advice-content">Include tempo runs: Weekly 20-30min at lactate threshold pace (comfortably hard)</div>
+                    </div>
+                    <div class="advice-card">
+                        <div class="advice-number">3</div>
+                        <div class="advice-content">Increase long run distance by 10% each week up to 30-32km</div>
+                    </div>
+                    <div class="advice-card">
+                        <div class="advice-number">4</div>
+                        <div class="advice-content">Add hill repeats: 8-10 x 90sec uphill efforts with easy jog down recovery</div>
+                    </div>
+                    <div class="advice-card">
+                        <div class="advice-number">5</div>
+                        <div class="advice-content">Ensure proper recovery: Keep 80% of runs at easy conversational pace</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

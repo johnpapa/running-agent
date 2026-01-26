@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Agent - Dashboard Activities</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f5f5f5; }
+        .navbar { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 0 20px; }
+        .nav-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 16px 0; }
+        .nav-brand { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: bold; color: #fc4c02; }
+        .nav-user { display: flex; align-items: center; gap: 12px; }
+        .nav-user img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid #fc4c02; }
+        .logout-btn { padding: 8px 16px; background-color: #fc4c02; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .main-content { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+        .tabs { display: flex; gap: 8px; margin-bottom: 30px; background: white; padding: 8px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .tab { flex: 1; padding: 16px 24px; background: transparent; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; color: #666; cursor: pointer; }
+        .tab.active { background: linear-gradient(135deg, #fc4c02 0%, #d84315 100%); color: white; }
+        .tab-content { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 30px; }
+        .search-box { margin-bottom: 24px; position: relative; }
+        .search-box input { width: 100%; padding: 12px 12px 12px 48px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 16px; }
+        .activity-card { border: 1px solid #e0e0e0; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+        .activity-header { display: flex; justify-content: space-between; margin-bottom: 16px; }
+        .activity-type { display: inline-block; padding: 4px 12px; background-color: #fc4c02; color: white; border-radius: 12px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+        .activity-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px; }
+        .stat-value { font-weight: 600; color: #333; font-size: 16px; }
+        .stat-label { font-size: 12px; color: #999; margin-top: 4px; }
+        h2 { margin-bottom: 16px; color: #333; }
+        h3 { color: #333; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <span>🏃</span>
+                <span>Running Agent</span>
+            </div>
+            <div class="nav-user">
+                <img src="https://via.placeholder.com/40/fc4c02/ffffff?text=JR" alt="John Runner">
+                <span style="font-weight: 600;">John Runner</span>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="tabs">
+            <button class="tab active">📊 Activities</button>
+            <button class="tab">⚡ Best Times</button>
+            <button class="tab">🤖 AI Analysis</button>
+        </div>
+
+        <div class="tab-content">
+            <h2>Your Running Activities</h2>
+            <div class="search-box">
+                <input type="text" placeholder="🔍 Search activities...">
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div>
+                        <h3>Progressive Long Run</h3>
+                        <span class="activity-type">Run</span>
+                    </div>
+                    <div style="color: #999; font-size: 14px;">Dec 20, 2025 @ 6:30 AM</div>
+                </div>
+                <div class="activity-stats">
+                    <div>
+                        <div class="stat-value">22.50 km</div>
+                        <div class="stat-label">Distance</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">1:52:30</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">5:00/km</div>
+                        <div class="stat-label">Pace</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">145m</div>
+                        <div class="stat-label">Elevation</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div>
+                        <h3>Track Intervals - 10x800m</h3>
+                        <span class="activity-type">Run</span>
+                    </div>
+                    <div style="color: #999; font-size: 14px;">Dec 18, 2025 @ 5:00 PM</div>
+                </div>
+                <div class="activity-stats">
+                    <div>
+                        <div class="stat-value">12.00 km</div>
+                        <div class="stat-label">Distance</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">52:40</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">4:23/km</div>
+                        <div class="stat-label">Pace</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">15m</div>
+                        <div class="stat-label">Elevation</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div>
+                        <h3>Easy Recovery Run</h3>
+                        <span class="activity-type">Run</span>
+                    </div>
+                    <div style="color: #999; font-size: 14px;">Dec 17, 2025 @ 7:00 AM</div>
+                </div>
+                <div class="activity-stats">
+                    <div>
+                        <div class="stat-value">8.00 km</div>
+                        <div class="stat-label">Distance</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">44:00</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">5:30/km</div>
+                        <div class="stat-label">Pace</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">65m</div>
+                        <div class="stat-label">Elevation</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity-card">
+                <div class="activity-header">
+                    <div>
+                        <h3>Tempo Run</h3>
+                        <span class="activity-type">Run</span>
+                    </div>
+                    <div style="color: #999; font-size: 14px;">Dec 15, 2025 @ 6:00 AM</div>
+                </div>
+                <div class="activity-stats">
+                    <div>
+                        <div class="stat-value">15.00 km</div>
+                        <div class="stat-label">Distance</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">1:11:15</div>
+                        <div class="stat-label">Time</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">4:45/km</div>
+                        <div class="stat-label">Pace</div>
+                    </div>
+                    <div>
+                        <div class="stat-value">95m</div>
+                        <div class="stat-label">Elevation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
