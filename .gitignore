@@ -27,3 +27,7 @@ Thumbs.db
 # Temporary files
 tmp/
 temp/
+angular-app/node_modules/
+angular-app/dist/
+strava-mcp-server/node_modules/
+strava-mcp-server/dist/
