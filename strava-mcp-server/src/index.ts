@@ -45,8 +45,10 @@ app.post('/auth/token', async (req, res) => {
     });
     
     res.json(response.data);
-  } catch (error: any) {
-    console.error('Error exchanging token:', error.response?.data || error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown } };
+    console.error('Error exchanging token:', axiosError.response?.data || errorMessage);
     res.status(500).json({ error: 'Failed to exchange authorization code' });
   }
 });
@@ -64,8 +66,10 @@ app.post('/auth/refresh', async (req, res) => {
     });
     
     res.json(response.data);
-  } catch (error: any) {
-    console.error('Error refreshing token:', error.response?.data || error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown } };
+    console.error('Error refreshing token:', axiosError.response?.data || errorMessage);
     res.status(500).json({ error: 'Failed to refresh token' });
   }
 });
@@ -84,8 +88,10 @@ app.get('/athlete', async (req, res) => {
     });
     
     res.json(response.data);
-  } catch (error: any) {
-    console.error('Error fetching athlete:', error.response?.data || error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown } };
+    console.error('Error fetching athlete:', axiosError.response?.data || errorMessage);
     res.status(500).json({ error: 'Failed to fetch athlete profile' });
   }
 });
@@ -107,8 +113,10 @@ app.get('/activities', async (req, res) => {
     });
     
     res.json(response.data);
-  } catch (error: any) {
-    console.error('Error fetching activities:', error.response?.data || error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown } };
+    console.error('Error fetching activities:', axiosError.response?.data || errorMessage);
     res.status(500).json({ error: 'Failed to fetch activities' });
   }
 });
@@ -129,8 +137,10 @@ app.get('/activities/:id', async (req, res) => {
     });
     
     res.json(response.data);
-  } catch (error: any) {
-    console.error('Error fetching activity:', error.response?.data || error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown } };
+    console.error('Error fetching activity:', axiosError.response?.data || errorMessage);
     res.status(500).json({ error: 'Failed to fetch activity' });
   }
 });
@@ -157,8 +167,10 @@ app.get('/athlete/stats', async (req, res) => {
     });
     
     res.json(statsResponse.data);
-  } catch (error: any) {
-    console.error('Error fetching stats:', error.response?.data || error.message);
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const axiosError = error as { response?: { data?: unknown } };
+    console.error('Error fetching stats:', axiosError.response?.data || errorMessage);
     res.status(500).json({ error: 'Failed to fetch athlete stats' });
   }
 });

@@ -48,37 +48,45 @@ export class StravaService {
   }
 
   getAllActivities(): Observable<Activity[]> {
-    // Fetch multiple pages to get more comprehensive data
-    const requests: Observable<Activity[]>[] = [];
-    for (let page = 1; page <= 10; page++) {
-      requests.push(this.getActivities(page, 100));
-    }
-    
+    // Fetch multiple pages sequentially to avoid rate limits
+    // Start with just 3 pages (up to 300 activities) which should be sufficient for most users
     return new Observable(observer => {
       const allActivities: Activity[] = [];
-      let completed = 0;
+      let currentPage = 1;
+      const maxPages = 3;
       
-      requests.forEach((request, index) => {
-        request.subscribe({
+      const fetchNextPage = () => {
+        if (currentPage > maxPages) {
+          observer.next(allActivities);
+          observer.complete();
+          return;
+        }
+        
+        this.getActivities(currentPage, 100).subscribe({
           next: (activities) => {
-            allActivities.push(...activities);
-            completed++;
-            
-            if (completed === requests.length) {
+            if (activities.length === 0) {
+              // No more activities, complete early
               observer.next(allActivities);
               observer.complete();
+              return;
             }
+            
+            allActivities.push(...activities);
+            currentPage++;
+            
+            // Small delay to avoid rate limiting
+            setTimeout(() => fetchNextPage(), 100);
           },
           error: (error) => {
-            // If a page fails, continue with what we have
-            completed++;
-            if (completed === requests.length) {
-              observer.next(allActivities);
-              observer.complete();
-            }
+            console.error(`Error fetching page ${currentPage}:`, error);
+            // Return what we have so far
+            observer.next(allActivities);
+            observer.complete();
           }
         });
-      });
+      };
+      
+      fetchNextPage();
     });
   }
 
