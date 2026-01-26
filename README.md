@@ -127,7 +127,7 @@ The Angular app will run on `http://localhost:4200`
 ## Technologies Used
 
 ### Frontend (Angular)
-- Angular 17
+- Angular 19 (with security patches)
 - TypeScript
 - SCSS for styling
 - Standalone components
