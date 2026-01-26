@@ -5,11 +5,10 @@ import { StravaService } from '../../services/strava.service';
 import { Activity } from '../../models/strava.models';
 
 @Component({
-  selector: 'app-activities',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './activities.component.html',
-  styleUrl: './activities.component.scss'
+    selector: 'app-activities',
+    imports: [CommonModule, FormsModule],
+    templateUrl: './activities.component.html',
+    styleUrl: './activities.component.scss'
 })
 export class ActivitiesComponent implements OnInit {
   activities: Activity[] = [];

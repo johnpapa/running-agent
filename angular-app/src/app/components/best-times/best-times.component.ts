@@ -4,11 +4,10 @@ import { StravaService } from '../../services/strava.service';
 import { BestTime } from '../../models/strava.models';
 
 @Component({
-  selector: 'app-best-times',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './best-times.component.html',
-  styleUrl: './best-times.component.scss'
+    selector: 'app-best-times',
+    imports: [CommonModule],
+    templateUrl: './best-times.component.html',
+    styleUrl: './best-times.component.scss'
 })
 export class BestTimesComponent implements OnInit {
   bestTimes: BestTime[] = [];

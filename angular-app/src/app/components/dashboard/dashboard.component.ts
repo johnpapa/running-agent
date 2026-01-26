@@ -8,11 +8,10 @@ import { ActivitiesComponent } from '../activities/activities.component';
 import { BestTimesComponent } from '../best-times/best-times.component';
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule, ActivitiesComponent, BestTimesComponent],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.scss'
+    selector: 'app-dashboard',
+    imports: [CommonModule, ActivitiesComponent, BestTimesComponent],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   athlete: Athlete | null = null;
