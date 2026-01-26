@@ -1,0 +1,38 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Running Agent</h1>
+      <p>Track your running activities and best times with Strava</p>
+    </div>
+
+    <div class="login-content">
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <button 
+        class="strava-login-btn"
+        (click)="loginWithStrava()"
+        [disabled]="loading">
+        <span *ngIf="!loading">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+          </svg>
+          Connect with Strava
+        </span>
+        <span *ngIf="loading">Connecting...</span>
+      </button>
+
+      <div class="login-info">
+        <p><strong>Note:</strong> You'll need to configure the Strava MCP server before logging in.</p>
+        <ol>
+          <li>Create a Strava API application at <a href="https://www.strava.com/settings/api" target="_blank">strava.com/settings/api</a></li>
+          <li>Copy your Client ID and Client Secret</li>
+          <li>Configure the MCP server with your credentials</li>
+          <li>Start the MCP server (see README for instructions)</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,52 @@
+<div class="dashboard-container">
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="nav-brand">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/>
+        </svg>
+        <span>Running Agent</span>
+      </div>
+
+      <div class="nav-user" *ngIf="athlete">
+        <img [src]="athlete.profile_medium" [alt]="athlete.firstname + ' ' + athlete.lastname" />
+        <span>{{ athlete.firstname }} {{ athlete.lastname }}</span>
+        <button class="logout-btn" (click)="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <div class="tabs">
+      <button 
+        class="tab"
+        [class.active]="activeTab === 'activities'"
+        (click)="setActiveTab('activities')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+        </svg>
+        Activities
+      </button>
+      <button 
+        class="tab"
+        [class.active]="activeTab === 'bestTimes'"
+        (click)="setActiveTab('bestTimes')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+        Best Times
+      </button>
+    </div>
+
+    <div class="tab-content">
+      <app-activities *ngIf="activeTab === 'activities'"></app-activities>
+      <app-best-times *ngIf="activeTab === 'bestTimes'"></app-best-times>
+    </div>
+  </div>
+</div>
+
+<div class="loading-overlay" *ngIf="loading">
+  <div class="spinner"></div>
+  <p>Loading your profile...</p>
+</div>
+

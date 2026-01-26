@@ -1,0 +1,62 @@
+<div class="best-times-container">
+  <div class="best-times-header">
+    <h2>Your Best Times</h2>
+    <p>Your fastest recorded times for standard running distances</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Analyzing your activities...</p>
+  </div>
+
+  <div *ngIf="!loading && error" class="error-state">
+    <p>{{ error }}</p>
+    <button (click)="loadBestTimes()">Retry</button>
+  </div>
+
+  <div *ngIf="!loading && !error && bestTimes.length === 0" class="empty-state">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+    </svg>
+    <h3>No personal records found</h3>
+    <p>Complete runs at standard distances (5K, 10K, Half Marathon, etc.) to see your best times here!</p>
+  </div>
+
+  <div *ngIf="!loading && !error && bestTimes.length > 0" class="best-times-grid">
+    <div class="best-time-card" *ngFor="let time of bestTimes">
+      <div class="card-header">
+        <div class="distance-badge">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </div>
+        <h3>{{ time.distance }}</h3>
+      </div>
+
+      <div class="card-content">
+        <div class="time-display">
+          <div class="time-value">{{ formatTime(time.time) }}</div>
+          <div class="pace-value">{{ time.pace }}</div>
+        </div>
+
+        <div class="activity-info">
+          <div class="info-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>{{ formatDate(time.date) }}</span>
+          </div>
+          <div class="info-row">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <span class="activity-name">{{ time.activityName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,21 @@
+<div class="callback-container">
+  <div class="callback-card">
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <h2>Authenticating with Strava...</h2>
+      <p>Please wait while we complete your login.</p>
+    </div>
+
+    <div *ngIf="!loading && error" class="error-state">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="15" y1="9" x2="9" y2="15"></line>
+        <line x1="9" y1="9" x2="15" y2="15"></line>
+      </svg>
+      <h2>Authentication Failed</h2>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="retry()">Try Again</button>
+    </div>
+  </div>
+</div>
+
