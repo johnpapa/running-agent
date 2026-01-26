@@ -6,16 +6,17 @@ import { StravaService } from '../../services/strava.service';
 import { Athlete } from '../../models/strava.models';
 import { ActivitiesComponent } from '../activities/activities.component';
 import { BestTimesComponent } from '../best-times/best-times.component';
+import { TrainingAnalysisComponent } from '../training-analysis/training-analysis';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [CommonModule, ActivitiesComponent, BestTimesComponent],
+    imports: [CommonModule, ActivitiesComponent, BestTimesComponent, TrainingAnalysisComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit {
   athlete: Athlete | null = null;
-  activeTab: 'activities' | 'bestTimes' = 'activities';
+  activeTab: 'activities' | 'bestTimes' | 'analysis' = 'activities';
   loading = true;
 
   constructor(
@@ -51,7 +52,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  setActiveTab(tab: 'activities' | 'bestTimes'): void {
+  setActiveTab(tab: 'activities' | 'bestTimes' | 'analysis'): void {
     this.activeTab = tab;
   }
 
