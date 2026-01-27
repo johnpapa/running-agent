@@ -32,13 +32,13 @@ export class StravaService {
   }
 
   getAthlete(): Observable<Athlete> {
-    return this.http.get<Athlete>(`${environment.mcpServerUrl}/athlete`, {
+    return this.http.get<Athlete>(`${environment.apiUrl}/athlete`, {
       headers: this.getHeaders()
     });
   }
 
   getActivities(page: number = 1, perPage: number = 30): Observable<Activity[]> {
-    return this.http.get<Activity[]>(`${environment.mcpServerUrl}/activities`, {
+    return this.http.get<Activity[]>(`${environment.apiUrl}/activities`, {
       headers: this.getHeaders(),
       params: {
         page: page.toString(),
@@ -91,7 +91,7 @@ export class StravaService {
   }
 
   getActivity(id: number): Observable<Activity> {
-    return this.http.get<Activity>(`${environment.mcpServerUrl}/activities/${id}`, {
+    return this.http.get<Activity>(`${environment.apiUrl}/activities/${id}`, {
       headers: this.getHeaders()
     });
   }

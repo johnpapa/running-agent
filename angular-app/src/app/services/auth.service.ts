@@ -27,11 +27,11 @@ export class AuthService {
   }
 
   getAuthUrl(): Observable<{ authUrl: string }> {
-    return this.http.get<{ authUrl: string }>(`${environment.mcpServerUrl}/auth/url`);
+    return this.http.get<{ authUrl: string }>(`${environment.apiUrl}/auth/url`);
   }
 
   exchangeToken(code: string): Observable<AuthToken> {
-    return this.http.post<AuthToken>(`${environment.mcpServerUrl}/auth/token`, { code }).pipe(
+    return this.http.post<AuthToken>(`${environment.apiUrl}/auth/token`, { code }).pipe(
       tap(token => {
         this.storeToken(token);
         if (token.athlete) {
@@ -48,7 +48,7 @@ export class AuthService {
       throw new Error('No refresh token available');
     }
 
-    return this.http.post<AuthToken>(`${environment.mcpServerUrl}/auth/refresh`, {
+    return this.http.post<AuthToken>(`${environment.apiUrl}/auth/refresh`, {
       refresh_token: token.refresh_token
     }).pipe(
       tap(newToken => {

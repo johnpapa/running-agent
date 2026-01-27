@@ -1,6 +1,6 @@
 # Running Agent - AI-Powered Training Analysis
 
-An Angular application that helps runners analyze their training, track personal records, and get AI-powered insights to improve performance. Integrates with Strava for activity data and uses GitHub Copilot SDK for intelligent training analysis.
+An Angular application that helps runners analyze their training, track personal records, and get AI-powered insights to improve performance. Integrates with Strava for activity data and uses OpenAI GPT-4 for intelligent training analysis.
 
 ## ✨ Key Features
 
@@ -16,38 +16,42 @@ An Angular application that helps runners analyze their training, track personal
 - Track progress over time
 - See which activities set your PRs
 
-### 🤖 AI-Powered Training Analysis (NEW!)
+### 🤖 AI-Powered Training Analysis
 - **Training Effectiveness**: AI identifies your most and least effective workouts
-- **Goal Assessment**: Get realistic goal predictions (e.g., "Can I improve my marathon from 3:24 to 3:15?")
+- **Heart Rate Analysis**: Zone distribution, trends, and efficiency recommendations
+- **Fueling Insights**: Pattern detection from activity notes and descriptions
+- **Pacing Analysis**: Negative splits, bonking detection, and consistency evaluation
+- **Goal Assessment**: Realistic goal predictions with detailed training plans
 - **Improvement Suggestions**: Personalized recommendations on how to get faster
-- **Race Analysis**: Insights on recent races and training plans
+- **Race Analysis**: Deep insights on race performance including weather impact
 - **Expected Improvements**: AI predicts realistic timeline for achieving goals
 
 ### 🔐 Secure Authentication
 - OAuth 2.0 integration with Strava
-- Secure token management
-- Support for social login (Google, etc.) via Strava
+- Secure token management via backend API
+- No API secrets exposed to frontend
 
 ## 🏗️ Architecture
 
 ### Frontend
-- **Angular 21** (latest version) with standalone components
+- **Angular 21** with standalone components
 - TypeScript with strict mode
 - SCSS for modern styling
 - RxJS for reactive state management
-- GitHub Copilot SDK for AI analysis
 
-### Backend/Integration
-- **Strava MCP Server** (external, community-maintained)
-  - See [STRAVA_MCP_SETUP.md](STRAVA_MCP_SETUP.md) for setup instructions
-  - We recommend [yorrickjansen/strava-mcp](https://github.com/yorrickjansen/strava-mcp)
+### Backend
+- **Express.js + TypeScript API**
+  - Strava OAuth flow handling
+  - Secure API proxy for Strava data
+  - OpenAI GPT-4 integration for AI analysis
+  - Comprehensive training analysis endpoints
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 20+ and npm
+- Node.js 18+ and npm
 - Strava account with API credentials
-- Strava MCP Server running (see STRAVA_MCP_SETUP.md)
+- OpenAI API key
 
 ### 1. Get Strava API Credentials
 1. Go to [https://www.strava.com/settings/api](https://www.strava.com/settings/api)
@@ -55,27 +59,23 @@ An Angular application that helps runners analyze their training, track personal
 3. Note your Client ID and Client Secret
 4. Set Authorization Callback Domain to `localhost`
 
-### 2. Set Up Strava MCP Server
-Follow the detailed instructions in [STRAVA_MCP_SETUP.md](STRAVA_MCP_SETUP.md).
+### 2. Get OpenAI API Key
+1. Go to [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+2. Create a new API key
+3. Save it securely
 
-Quick option using Python:
+### 3. Set Up the Backend API
 ```bash
-# Install Strava MCP server
-uvx strava-mcp
-
-# Or with pip
-pip install strava-mcp
-
-# Configure environment variables
-export STRAVA_CLIENT_ID=your_client_id
-export STRAVA_CLIENT_SECRET=your_client_secret
-export STRAVA_REFRESH_TOKEN=your_refresh_token
-
-# Run the server
-uvx strava-mcp
+cd api
+cp .env.example .env
+# Edit .env with your credentials
+npm install
+npm run dev
 ```
 
-### 3. Run the Angular Application
+The API server will run on http://localhost:3000
+
+### 4. Run the Angular Application
 ```bash
 cd angular-app
 npm install
@@ -84,7 +84,7 @@ npm start
 
 The app will be available at http://localhost:4200
 
-### 4. Start Using the App
+### 5. Start Using the App
 1. Open http://localhost:4200
 2. Click "Connect with Strava"
 3. Authorize the application
@@ -92,12 +92,13 @@ The app will be available at http://localhost:4200
 
 ## 📊 AI Analysis Features
 
-### Training Effectiveness
-The AI analyzes your recent activities to determine:
-- Which workouts were most effective for your goals
-- Which workouts were less beneficial
-- Why each workout was effective or ineffective
-- Specific metrics like pace consistency and effort level
+### Comprehensive Training Analysis
+The AI analyzes your recent activities to provide:
+- Most and least effective workouts with detailed reasoning
+- Heart rate zone distribution and efficiency trends
+- Fueling patterns extracted from activity descriptions
+- Pacing analysis (negative splits vs bonking)
+- Specific actionable training improvements
 
 ### Goal Assessment
 Ask questions like:
@@ -105,31 +106,39 @@ Ask questions like:
 - "Is a sub-3-hour marathon realistic for me?"
 
 The AI will assess:
-- Whether the goal is realistic (confidence %)
-- Estimated timeframe needed
-- Specific training steps to achieve it
-- Reasoning based on your current training
+- Goal feasibility with confidence percentage
+- Realistic timeframe needed
+- Specific weekly mileage targets
+- Key workouts to incorporate
+- Step-by-step training plan
 
-### Improvement Recommendations
-Get personalized advice on:
-- Specific workouts to add to your training
-- Optimal training volume and intensity
-- Recovery strategies
-- Race-specific preparation
+### Race Performance Analysis
+Deep dive into race performance:
+- Pacing strategy evaluation (negative split, even pace, or bonked)
+- Heart rate efficiency assessment
+- Fueling effectiveness from race notes
+- Weather impact considerations
+- Training recommendations for next race
 
 ## 🛠️ Technologies
 
+### Frontend
 - **Angular 21** - Latest version with modern features
 - **TypeScript 5.9** - Type-safe development
-- **GitHub Copilot SDK** - AI-powered analysis
 - **RxJS 7.8** - Reactive programming
 - **SCSS** - Modern styling
-- **Strava API** - Activity data via MCP server
+
+### Backend
+- **Express.js** - Web framework
+- **TypeScript** - Type-safe backend
+- **OpenAI GPT-4** - AI-powered analysis
+- **Axios** - HTTP client for Strava API
+- **Strava API** - Activity and athlete data
 
 ## 📖 Documentation
 
 - [QUICKSTART.md](QUICKSTART.md) - 5-minute setup guide
-- [STRAVA_MCP_SETUP.md](STRAVA_MCP_SETUP.md) - MCP server configuration
+- [api/README.md](api/README.md) - Backend API documentation
 - [FEATURES.md](FEATURES.md) - Complete feature list
 - [TESTING.md](TESTING.md) - Testing checklist
 - [SECURITY_UPDATE.md](SECURITY_UPDATE.md) - Security information
@@ -137,6 +146,7 @@ Get personalized advice on:
 ## 🔒 Security
 
 - OAuth 2.0 for authentication
+- Backend API proxy prevents API key exposure
 - Secure token storage
 - No API secrets in client code
 - Regular security updates
@@ -146,17 +156,29 @@ Get personalized advice on:
 
 ### Build the Application
 ```bash
+# Backend
+cd api
+npm run build
+
+# Frontend
 cd angular-app
 npm run build
 ```
 
 ### Run Tests
 ```bash
+cd angular-app
 npm test
 ```
 
 ### Development Mode
 ```bash
+# Terminal 1: API Server
+cd api
+npm run dev
+
+# Terminal 2: Angular App
+cd angular-app
 npm start
 ```
 
@@ -171,25 +193,19 @@ MIT License - See LICENSE file for details
 ## 🙏 Acknowledgments
 
 - Strava API for activity data
-- Community-maintained Strava MCP servers
-- GitHub Copilot SDK for AI capabilities
+- OpenAI for GPT-4 AI capabilities
 - Angular team for excellent framework
 
 ## ❓ Frequently Asked Questions
 
-### Why use an MCP server instead of direct API calls?
-The MCP (Model Context Protocol) server provides a standardized, maintained interface to the Strava API. Benefits include:
-- Community maintenance and updates
-- Built-in OAuth handling
-- Rate limiting and error handling
-- Security best practices
-- Full API feature support
-
 ### How does the AI analysis work?
-The application uses the GitHub Copilot SDK to analyze your training data and provide intelligent insights. The AI considers:
-- Your recent activity patterns
+The application uses OpenAI's GPT-4 to analyze your training data and provide intelligent insights. The AI considers:
+- Your recent activity patterns and metrics
+- Heart rate zones and trends
 - Pace consistency and progression
 - Training volume and intensity
+- Fueling patterns from activity notes
+- Pacing strategies (negative splits, bonking)
 - Recovery indicators
 - Goal-specific requirements
 
@@ -197,7 +213,10 @@ The application uses the GitHub Copilot SDK to analyze your training data and pr
 Currently, the app is designed specifically for Strava data. However, the architecture could be adapted to work with other fitness platforms.
 
 ### Is my data private?
-Yes! All authentication uses OAuth 2.0, and your data is only accessed with your explicit permission. Tokens are stored locally in your browser, and the app never stores your Strava password.
+Yes! All authentication uses OAuth 2.0, and your data is only accessed with your explicit permission. The backend API proxies all requests, keeping your credentials secure. Tokens are stored locally in your browser, and the app never stores your Strava password or API keys in the frontend.
+
+### What does the AI analysis cost?
+The application uses OpenAI's GPT-4 API, which has associated costs based on usage. You'll need your own OpenAI API key. Typical analysis requests cost a few cents each. Check OpenAI's pricing page for current rates.
 
 ## 📧 Support
 
