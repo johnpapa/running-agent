@@ -102,7 +102,7 @@ Implemented comprehensive OpenAI GPT-4 powered analysis:
 - Added FAQ about AI analysis costs and privacy
 - Removed MCP server references
 
-**STRAVA_MCP_SETUP.md:**
+**BACKEND_API_SETUP.md:**
 - Renamed/repurposed to "Backend API Setup"
 - Complete rewrite focusing on Express.js backend
 - Added security best practices
@@ -192,7 +192,7 @@ curl http://localhost:3000/auth/url
 6. `angular-app/src/app/components/login/login.component.html` - Remove MCP instructions
 7. `QUICKSTART.md` - Update for backend API setup
 8. `README.md` - Update architecture and features
-9. `STRAVA_MCP_SETUP.md` - Repurpose to Backend API Setup
+9. `BACKEND_API_SETUP.md` - Backend API Setup Documentation
 
 ## Files Created
 1. `api/package.json`

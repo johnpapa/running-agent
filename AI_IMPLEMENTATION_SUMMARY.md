@@ -22,7 +22,7 @@
 #### 2. Removed Custom MCP Server ✅
 - **Removed**: Entire `strava-mcp-server/` directory with custom Express.js implementation
 - **Replaced With**: Documentation for existing community MCP servers
-- **New Documentation**: Created `STRAVA_MCP_SETUP.md` with setup instructions for:
+- **New Documentation**: Created `BACKEND_API_SETUP.md` with setup instructions for:
   - Python implementation: [yorrickjansen/strava-mcp](https://github.com/yorrickjansen/strava-mcp)
   - TypeScript implementation: [kw510/strava-mcp](https://github.com/kw510/strava-mcp)
 - **Benefits**: Community-maintained, better tested, full feature support
@@ -108,7 +108,7 @@ Steps:
 
 #### 6. Documentation Updates ✅
 - **README.md**: Completely rewritten to highlight AI features
-- **STRAVA_MCP_SETUP.md**: New comprehensive MCP server guide
+- **BACKEND_API_SETUP.md**: New comprehensive backend API guide
 - **Architecture**: Updated to reflect new design
 - **Quick Start**: Simplified setup instructions
 - **FAQ**: Added AI analysis questions
@@ -146,7 +146,7 @@ Steps:
 - `angular-app/src/app/components/dashboard/*` - Added AI Analysis tab
 
 **Added (5 files)**:
-- `STRAVA_MCP_SETUP.md` - MCP server documentation
+- `BACKEND_API_SETUP.md` - Backend API documentation
 - `angular-app/src/app/services/ai-analysis.ts` - AI service
 - `angular-app/src/app/components/training-analysis/*` - Component files (3)
 
