@@ -95,8 +95,15 @@ export class TrainingAnalysisComponent implements OnInit {
     const currentSeconds = this.timeStringToSeconds(this.currentMarathonTime);
     const targetSeconds = this.timeStringToSeconds(this.targetMarathonTime);
 
-    if (currentSeconds <= targetSeconds) {
-      this.error = 'Target time must be faster than current time';
+    // Validate times are valid numbers
+    if (isNaN(currentSeconds) || isNaN(targetSeconds)) {
+      this.error = 'Please enter valid time in HH:MM:SS format';
+      return;
+    }
+
+    // Target must be faster (fewer seconds) than current
+    if (targetSeconds >= currentSeconds) {
+      this.error = 'Target time must be faster (less time) than current time';
       return;
     }
 
@@ -122,13 +129,25 @@ export class TrainingAnalysisComponent implements OnInit {
   }
 
   private timeStringToSeconds(timeStr: string): number {
+    if (!timeStr || typeof timeStr !== 'string') {
+      return NaN;
+    }
+    
     const parts = timeStr.split(':').map(p => parseInt(p, 10));
+    
+    // Validate all parts are valid numbers
+    if (parts.some(p => isNaN(p))) {
+      return NaN;
+    }
+    
     if (parts.length === 3) {
       return parts[0] * 3600 + parts[1] * 60 + parts[2];
     } else if (parts.length === 2) {
       return parts[0] * 60 + parts[1];
     }
-    return parseInt(timeStr, 10);
+    
+    const singleValue = parseInt(timeStr, 10);
+    return isNaN(singleValue) ? NaN : singleValue;
   }
 
   formatDistance(meters: number): string {
