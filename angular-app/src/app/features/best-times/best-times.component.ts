@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StravaService } from '../../services/strava.service';
-import { BestTime } from '../../models/strava.models';
+import { StravaService } from '../../core/api/strava.service';
+import { BestTime } from '../../core/api/strava.models';
 
 @Component({
     selector: 'app-best-times',

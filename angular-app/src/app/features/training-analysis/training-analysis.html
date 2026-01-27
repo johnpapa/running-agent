@@ -27,29 +27,57 @@
     <h3>🎯 Goal Assessment</h3>
     <p class="section-description">Is your goal realistic? Let AI help you find out!</p>
     
-    <div class="goal-inputs">
+    <form #goalForm="ngForm" class="goal-inputs">
       <div class="input-group">
-        <label>Current Marathon Time (HH:MM:SS):</label>
+        <label for="currentTime">
+          Current Marathon Time <span class="required">*</span> (HH:MM:SS):
+        </label>
         <input 
+          id="currentTime"
+          name="currentTime"
           type="text" 
           [(ngModel)]="currentMarathonTime"
+          #currentTimeInput="ngModel"
           placeholder="3:24:00"
-          class="time-input" />
+          pattern="[0-9]{1,2}:[0-5][0-9]:[0-5][0-9]"
+          required
+          class="time-input"
+          [class.invalid]="currentTimeInput.invalid && currentTimeInput.touched" />
+        <div class="error-message" *ngIf="currentTimeInput.invalid && currentTimeInput.touched">
+          <span *ngIf="currentTimeInput.errors?.['required']">Current time is required</span>
+          <span *ngIf="currentTimeInput.errors?.['pattern']">Please use format HH:MM:SS (e.g., 3:24:00)</span>
+        </div>
       </div>
       
       <div class="input-group">
-        <label>Target Marathon Time (HH:MM:SS):</label>
+        <label for="targetTime">
+          Target Marathon Time <span class="required">*</span> (HH:MM:SS):
+        </label>
         <input 
+          id="targetTime"
+          name="targetTime"
           type="text" 
           [(ngModel)]="targetMarathonTime"
+          #targetTimeInput="ngModel"
           placeholder="3:15:00"
-          class="time-input" />
+          pattern="[0-9]{1,2}:[0-5][0-9]:[0-5][0-9]"
+          required
+          class="time-input"
+          [class.invalid]="targetTimeInput.invalid && targetTimeInput.touched" />
+        <div class="error-message" *ngIf="targetTimeInput.invalid && targetTimeInput.touched">
+          <span *ngIf="targetTimeInput.errors?.['required']">Target time is required</span>
+          <span *ngIf="targetTimeInput.errors?.['pattern']">Please use format HH:MM:SS (e.g., 3:15:00)</span>
+        </div>
       </div>
       
-      <button class="assess-btn" (click)="assessGoal()">
-        Assess My Goal
+      <button 
+        class="assess-btn" 
+        type="button"
+        (click)="assessGoal()"
+        [disabled]="goalForm.invalid || assessingGoal">
+        {{ assessingGoal ? 'Assessing...' : 'Assess My Goal' }}
       </button>
-    </div>
+    </form>
 
     <div *ngIf="goalAssessment" class="goal-result">
       <div class="result-header" [style.background]="getConfidenceColor(goalAssessment.confidence)">

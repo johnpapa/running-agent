@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Activity } from '../models/strava.models';
-import { environment } from '../../environments/environment';
-import { AuthService } from './auth.service';
+import { Activity } from '../../core/api/strava.models';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../core/auth/auth.service';
 
 export interface TrainingAnalysis {
   mostEffectiveWorkouts: AnalyzedWorkout[];

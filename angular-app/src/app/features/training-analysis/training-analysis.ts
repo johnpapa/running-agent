@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AiAnalysisService, TrainingAnalysis as AnalysisResult, GoalAssessment } from '../../services/ai-analysis';
-import { StravaService } from '../../services/strava.service';
-import { Activity } from '../../models/strava.models';
+import { AiAnalysisService, TrainingAnalysis as AnalysisResult, GoalAssessment } from './ai-analysis';
+import { StravaService } from '../../core/api/strava.service';
+import { Activity } from '../../core/api/strava.models';
 
 @Component({
   selector: 'app-training-analysis',
@@ -18,6 +18,7 @@ export class TrainingAnalysisComponent implements OnInit {
   improvementAdvice: string[] = [];
   loading = false;
   error: string | null = null;
+  assessingGoal = false;
 
   // Goal assessment inputs
   currentMarathonTime = '3:24:00'; // Example: 3 hours 24 minutes
@@ -99,7 +100,7 @@ export class TrainingAnalysisComponent implements OnInit {
       return;
     }
 
-    this.loading = true;
+    this.assessingGoal = true;
     this.error = null;
 
     this.aiService.assessGoal(
@@ -110,12 +111,12 @@ export class TrainingAnalysisComponent implements OnInit {
     ).subscribe({
       next: (assessment) => {
         this.goalAssessment = assessment;
-        this.loading = false;
+        this.assessingGoal = false;
       },
       error: (err) => {
         this.error = 'Failed to assess goal';
         console.error('Error assessing goal:', err);
-        this.loading = false;
+        this.assessingGoal = false;
       }
     });
   }

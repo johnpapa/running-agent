@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { StravaService } from '../../services/strava.service';
-import { Activity } from '../../models/strava.models';
+import { StravaService } from '../../core/api/strava.service';
+import { Activity } from '../../core/api/strava.models';
 
 @Component({
     selector: 'app-activities',

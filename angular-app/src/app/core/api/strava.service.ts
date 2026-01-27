@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { Activity, Athlete, BestTime, DistanceFilter } from '../models/strava.models';
-import { AuthService } from './auth.service';
+import { environment } from '../../../environments/environment';
+import { Activity, Athlete, BestTime, DistanceFilter } from './strava.models';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'

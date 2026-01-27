@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { StravaService } from '../../services/strava.service';
-import { Athlete } from '../../models/strava.models';
+import { AuthService } from '../../core/auth/auth.service';
+import { StravaService } from '../../core/api/strava.service';
+import { Athlete } from '../../core/api/strava.models';
 import { ActivitiesComponent } from '../activities/activities.component';
 import { BestTimesComponent } from '../best-times/best-times.component';
 import { TrainingAnalysisComponent } from '../training-analysis/training-analysis';

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
-import { AuthToken, Athlete } from '../models/strava.models';
+import { environment } from '../../../environments/environment';
+import { AuthToken, Athlete } from '../api/strava.models';
 
 @Injectable({
   providedIn: 'root'
