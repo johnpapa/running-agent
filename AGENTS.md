@@ -14,7 +14,7 @@ This document outlines the development standards, coding conventions, and best p
 
 ## Angular Style Guide
 
-This project follows the **[John Papa Angular Style Guide](https://angular.io/guide/styleguide)** with additional conventions specific to our application.
+This project follows the **[Angular Style Guide](https://angular.dev/style-guide)** and **[John Papa's Angular Style Guide](https://github.com/johnpapa/angular-styleguide)** with additional conventions specific to our application.
 
 ### Key Principles
 
@@ -622,14 +622,15 @@ export class AuthService {
 ## Resources
 
 ### Official Documentation
-- [Angular Style Guide](https://angular.io/guide/styleguide)
+- [Angular Style Guide](https://angular.dev/style-guide)
+- [John Papa's Angular Style Guide](https://github.com/johnpapa/angular-styleguide)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
 - [RxJS Documentation](https://rxjs.dev/)
 - [Playwright Documentation](https://playwright.dev/)
 
 ### Community Resources
 - [John Papa's Angular Style Guide](https://github.com/johnpapa/angular-styleguide)
-- [Angular Best Practices](https://angular.io/guide/best-practices)
+- [Angular Documentation](https://angular.dev/)
 - [TypeScript Deep Dive](https://basarat.gitbook.io/typescript/)
 
 ### Tools

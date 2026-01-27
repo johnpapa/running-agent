@@ -6,7 +6,7 @@ import { StravaService } from '../../core/api/strava.service';
 import { Athlete } from '../../core/api/strava.models';
 import { ActivitiesComponent } from '../activities/activities.component';
 import { BestTimesComponent } from '../best-times/best-times.component';
-import { TrainingAnalysisComponent } from '../training-analysis/training-analysis';
+import { TrainingAnalysisComponent } from '../training-analysis/training-analysis.component';
 
 @Component({
     selector: 'app-dashboard',

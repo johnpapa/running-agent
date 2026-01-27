@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AiAnalysisService, TrainingAnalysis as AnalysisResult, GoalAssessment } from './ai-analysis';
+import { AiAnalysisService, TrainingAnalysis as AnalysisResult, GoalAssessment } from './ai-analysis.service';
 import { StravaService } from '../../core/api/strava.service';
 import { Activity } from '../../core/api/strava.models';
 
 @Component({
   selector: 'app-training-analysis',
   imports: [CommonModule, FormsModule],
-  templateUrl: './training-analysis.html',
-  styleUrl: './training-analysis.scss',
+  templateUrl: './training-analysis.component.html',
+  styleUrl: './training-analysis.component.scss',
 })
 export class TrainingAnalysisComponent implements OnInit {
   activities: Activity[] = [];
