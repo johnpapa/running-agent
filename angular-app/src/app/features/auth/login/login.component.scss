@@ -5,6 +5,10 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
+
+  @media (max-width: 480px) {
+    padding: 16px;
+  }
 }
 
 .login-card {
@@ -14,6 +18,11 @@
   max-width: 500px;
   width: 100%;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    border-radius: 12px;
+  }
 }
 
 .login-header {
@@ -26,17 +35,49 @@
     margin: 0 0 10px 0;
     font-size: 32px;
     font-weight: bold;
+
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 24px;
+    }
   }
 
   p {
     margin: 0;
     font-size: 16px;
     opacity: 0.9;
+
+    @media (max-width: 768px) {
+      font-size: 15px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 32px 24px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 24px 20px;
   }
 }
 
 .login-content {
   padding: 40px 30px;
+
+  @media (max-width: 768px) {
+    padding: 32px 24px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 24px 20px;
+  }
 }
 
 .error-message {
@@ -46,6 +87,11 @@
   border-radius: 8px;
   margin-bottom: 20px;
   border-left: 4px solid #c33;
+
+  @media (max-width: 480px) {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
 }
 
 .strava-login-btn {
@@ -63,6 +109,7 @@
   justify-content: center;
   gap: 12px;
   transition: all 0.3s ease;
+  min-height: 56px;
 
   &:hover:not(:disabled) {
     background-color: #d84315;
@@ -78,6 +125,23 @@
   svg {
     width: 24px;
     height: 24px;
+
+    @media (max-width: 480px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px 20px;
+    font-size: 17px;
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 18px;
+    font-size: 16px;
+    min-height: 48px;
   }
 }
 
@@ -100,6 +164,10 @@
   ol {
     margin: 10px 0 0 0;
     padding-left: 20px;
+
+    @media (max-width: 480px) {
+      padding-left: 18px;
+    }
   }
 
   li {
@@ -109,9 +177,21 @@
   a {
     color: #667eea;
     text-decoration: none;
+    word-break: break-word;
 
     &:hover {
       text-decoration: underline;
     }
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 24px;
+    padding: 18px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 13px;
+    padding: 16px;
+    margin-top: 20px;
   }
 }

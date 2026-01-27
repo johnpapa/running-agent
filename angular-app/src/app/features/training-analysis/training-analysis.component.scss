@@ -2,6 +2,19 @@
   max-height: 70vh;
   overflow-y: auto;
   padding: 20px;
+
+  @media (max-width: 1024px) {
+    padding: 16px;
+  }
+
+  @media (max-width: 768px) {
+    max-height: none;
+    padding: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 8px;
+  }
 }
 
 .analysis-header {
@@ -12,12 +25,28 @@
     margin: 0 0 8px 0;
     color: #333;
     font-size: 28px;
+
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 20px;
+    }
   }
 
   p {
     margin: 0;
     color: #666;
     font-size: 16px;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 13px;
+    }
   }
 }
 
@@ -36,6 +65,12 @@
     height: 50px;
     animation: spin 1s linear infinite;
     margin: 0 auto 20px;
+
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+      border-width: 3px;
+    }
   }
 
   svg {
@@ -46,10 +81,18 @@
   h3 {
     margin: 0 0 10px 0;
     color: #333;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
   }
 
   p {
     margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
   }
 
   button {
@@ -61,9 +104,15 @@
     border-radius: 6px;
     font-size: 14px;
     cursor: pointer;
+    min-height: 44px;
 
     &:hover {
       background-color: #d84315;
+    }
+
+    @media (max-width: 480px) {
+      padding: 10px 20px;
+      font-size: 13px;
     }
   }
 }
@@ -84,12 +133,34 @@
     margin: 0 0 8px 0;
     color: #333;
     font-size: 22px;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 18px;
+    }
   }
 
   .section-description {
     color: #666;
     margin: 0 0 20px 0;
     font-size: 14px;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px;
   }
 }
 
@@ -98,6 +169,15 @@
   grid-template-columns: 1fr 1fr auto;
   gap: 16px;
   align-items: end;
+
+  @media (max-width: 1024px) {
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
 
   .input-group {
     label {
@@ -111,6 +191,11 @@
         color: #f44336;
         font-weight: bold;
       }
+
+      @media (max-width: 480px) {
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
     }
 
     .time-input {
@@ -120,6 +205,7 @@
       border-radius: 8px;
       font-size: 16px;
       font-family: monospace;
+      min-height: 44px;
 
       &:focus {
         outline: none;
@@ -129,6 +215,11 @@
       &.invalid {
         border-color: #f44336;
         background-color: #ffebee;
+      }
+
+      @media (max-width: 480px) {
+        padding: 10px;
+        font-size: 14px;
       }
     }
 
@@ -140,6 +231,10 @@
 
       span {
         display: block;
+      }
+
+      @media (max-width: 480px) {
+        font-size: 12px;
       }
     }
   }
@@ -155,6 +250,7 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.3s ease;
+    min-height: 44px;
 
     &:hover:not(:disabled) {
       background-color: #d84315;
@@ -165,6 +261,15 @@
       background-color: #ccc;
       cursor: not-allowed;
       transform: none;
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      padding: 12px 20px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 14px;
     }
   }
 }
@@ -181,10 +286,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
 
     h4 {
       margin: 0;
       font-size: 20px;
+
+      @media (max-width: 768px) {
+        font-size: 18px;
+      }
     }
 
     .confidence-badge {
@@ -192,6 +303,15 @@
       padding: 8px 16px;
       border-radius: 20px;
       font-weight: 600;
+
+      @media (max-width: 480px) {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      padding: 16px;
     }
   }
 
@@ -202,12 +322,20 @@
     p {
       margin: 0 0 12px 0;
       line-height: 1.6;
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
     }
 
     h5 {
       margin: 20px 0 12px 0;
       color: #333;
       font-size: 16px;
+
+      @media (max-width: 768px) {
+        font-size: 15px;
+      }
     }
 
     .steps-list {
@@ -217,8 +345,20 @@
       li {
         margin-bottom: 8px;
         line-height: 1.5;
+
+        @media (max-width: 768px) {
+          font-size: 14px;
+        }
       }
     }
+
+    @media (max-width: 768px) {
+      padding: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 8px;
   }
 }
 
@@ -229,6 +369,7 @@
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
@@ -237,6 +378,11 @@
     margin: 0 0 16px 0;
     color: #333;
     font-size: 18px;
+
+    @media (max-width: 768px) {
+      font-size: 17px;
+      margin-bottom: 12px;
+    }
   }
 }
 
@@ -252,11 +398,18 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
 
     .workout-name {
       font-weight: 600;
       color: #333;
       flex: 1;
+      min-width: 150px;
+
+      @media (max-width: 480px) {
+        font-size: 15px;
+      }
     }
 
     .effectiveness-badge {
@@ -265,6 +418,11 @@
       color: white;
       font-weight: 600;
       font-size: 14px;
+
+      @media (max-width: 480px) {
+        font-size: 13px;
+        padding: 3px 10px;
+      }
     }
   }
 
@@ -275,6 +433,10 @@
       margin: 4px 0;
       font-size: 13px;
       color: #666;
+
+      @media (max-width: 480px) {
+        font-size: 12px;
+      }
     }
   }
 
@@ -285,6 +447,14 @@
     font-style: italic;
     padding-top: 12px;
     border-top: 1px solid #e0e0e0;
+
+    @media (max-width: 480px) {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px;
   }
 }
 
@@ -292,6 +462,10 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
 }
 
 .advice-card {
@@ -314,12 +488,31 @@
     justify-content: center;
     font-weight: 600;
     font-size: 16px;
+
+    @media (max-width: 480px) {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
   }
 
   .advice-content {
     flex: 1;
     color: #333;
     line-height: 1.6;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 14px;
+    gap: 12px;
   }
 }
 
@@ -327,6 +520,15 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .insight-card {
@@ -339,6 +541,10 @@
   .insight-icon {
     font-size: 32px;
     margin-bottom: 12px;
+
+    @media (max-width: 768px) {
+      font-size: 28px;
+    }
   }
 
   h5 {
@@ -347,6 +553,10 @@
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
   }
 
   p {
@@ -354,5 +564,13 @@
     color: #fc4c02;
     font-size: 20px;
     font-weight: 600;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
   }
 }

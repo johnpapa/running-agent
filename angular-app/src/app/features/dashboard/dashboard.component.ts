@@ -7,10 +7,11 @@ import { Athlete } from '../../core/api/strava.models';
 import { ActivitiesComponent } from '../activities/activities.component';
 import { BestTimesComponent } from '../best-times/best-times.component';
 import { TrainingAnalysisComponent } from '../training-analysis/training-analysis.component';
+import { InstallPromptComponent } from '../../shared/components/install-prompt/install-prompt.component';
 
 @Component({
     selector: 'app-dashboard',
-    imports: [CommonModule, ActivitiesComponent, BestTimesComponent, TrainingAnalysisComponent],
+    imports: [CommonModule, ActivitiesComponent, BestTimesComponent, TrainingAnalysisComponent, InstallPromptComponent],
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.scss'
 })
