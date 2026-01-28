@@ -122,15 +122,11 @@
     gap: 16px;
   }
 
+  // CRITICAL: Force single column for ALL mobile/tablet screens
+  // This ensures only 1 item per row on phones
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-
-  // Force single column for phone screens (increased from 480px to catch more devices)
-  @media (max-width: 600px) {
     grid-template-columns: 1fr !important;
-    gap: 16px;
+    gap: 16px !important;
   }
 }
 
