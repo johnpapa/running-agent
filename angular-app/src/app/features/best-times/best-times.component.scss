@@ -1,9 +1,18 @@
 .best-times-container {
   max-height: 70vh;
   overflow-y: auto;
+  // Ensure container respects viewport
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
 
   @media (max-width: 768px) {
     max-height: none;
+  }
+
+  @media (max-width: 600px) {
+    // Add small padding on mobile to prevent edge-to-edge content
+    padding: 0 4px;
   }
 }
 
@@ -118,9 +127,9 @@
     gap: 12px;
   }
 
-  // Force single column for phone screens
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
+  // Force single column for phone screens (increased from 480px to catch more devices)
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr !important;
     gap: 16px;
   }
 }
@@ -131,6 +140,9 @@
   overflow: hidden;
   transition: all 0.3s ease;
   background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  // Ensure card never overflows viewport
+  max-width: 100%;
+  width: 100%;
 
   &:hover {
     border-color: #fc4c02;
@@ -141,6 +153,11 @@
   @media (max-width: 768px) {
     border-radius: 12px;
   }
+
+  @media (max-width: 600px) {
+    // Ensure cards fit on mobile screens
+    min-width: 0;
+  }
 }
 
 .card-header {
@@ -150,6 +167,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  // Prevent overflow
+  min-width: 0;
+  width: 100%;
 
   .distance-badge {
     background: rgba(255, 255, 255, 0.2);
@@ -159,6 +179,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 
     svg {
       stroke: white;
@@ -170,13 +191,19 @@
     margin: 0;
     font-size: 20px;
     font-weight: bold;
+    // Allow text to shrink if needed
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     @media (max-width: 768px) {
       font-size: 18px;
     }
 
-    @media (max-width: 480px) {
-      font-size: 20px;
+    @media (max-width: 600px) {
+      font-size: 18px;
     }
   }
 
@@ -195,17 +222,17 @@
     }
   }
 
-  @media (max-width: 480px) {
-    padding: 20px;
+  @media (max-width: 600px) {
+    padding: 18px;
     gap: 12px;
 
     .distance-badge {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
 
       svg {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
       }
     }
   }
@@ -213,13 +240,17 @@
 
 .card-content {
   padding: 24px 20px;
+  // Ensure content doesn't overflow
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 
   @media (max-width: 768px) {
     padding: 20px 16px;
   }
 
-  @media (max-width: 480px) {
-    padding: 24px 20px;
+  @media (max-width: 600px) {
+    padding: 20px 18px;
   }
 }
 
@@ -234,13 +265,16 @@
     font-weight: bold;
     color: #333;
     margin-bottom: 8px;
+    // Prevent overflow
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 
     @media (max-width: 768px) {
       font-size: 30px;
     }
 
-    @media (max-width: 480px) {
-      font-size: 36px;
+    @media (max-width: 600px) {
+      font-size: 32px;
     }
   }
 
@@ -248,19 +282,22 @@
     font-size: 16px;
     color: #fc4c02;
     font-weight: 600;
+    // Prevent overflow
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 
     @media (max-width: 768px) {
       font-size: 14px;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       font-size: 15px;
     }
   }
 
-  @media (max-width: 480px) {
-    margin-bottom: 24px;
-    padding-bottom: 24px;
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
   }
 }
 
@@ -280,12 +317,15 @@
   gap: 8px;
   color: #666;
   font-size: 14px;
+  // Prevent overflow of entire row
+  min-width: 0;
+  width: 100%;
 
   svg {
     color: #999;
     flex-shrink: 0;
 
-    @media (max-width: 480px) {
+    @media (max-width: 600px) {
       width: 18px;
       height: 18px;
     }
@@ -296,13 +336,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    // Ensure min-width is 0 to allow flexbox shrinking
+    min-width: 0;
   }
 
   @media (max-width: 768px) {
     font-size: 13px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 600px) {
     font-size: 14px;
     gap: 10px;
   }
