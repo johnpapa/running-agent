@@ -114,19 +114,32 @@
 
 .best-times-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  // Default: 3 columns on large desktop
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  // Medium screens (laptop/large tablet): 2 columns
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  // CRITICAL: Small screens (tablet/phone): ONLY 1 column
+  // Force single column below 900px to ensure mobile gets 1 item per row
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr !important;
     gap: 16px;
   }
 
-  // CRITICAL: Force single column for ALL mobile/tablet screens
-  // This ensures only 1 item per row on phones
+  // Extra enforcement for phones
   @media (max-width: 768px) {
     grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
   }
 }
 
