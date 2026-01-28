@@ -3,6 +3,7 @@
 This document outlines the development standards, coding conventions, and best practices for the Running Agent project. These guidelines ensure consistency, maintainability, and quality across the codebase.
 
 ## Table of Contents
+- [Mandatory PR Requirements](#mandatory-pr-requirements)
 - [Angular Style Guide](#angular-style-guide)
 - [Project Structure](#project-structure)
 - [TypeScript Guidelines](#typescript-guidelines)
@@ -11,6 +12,98 @@ This document outlines the development standards, coding conventions, and best p
 - [Testing Guidelines](#testing-guidelines)
 - [Git Workflow](#git-workflow)
 - [Code Review Standards](#code-review-standards)
+
+## Mandatory PR Requirements
+
+**CRITICAL**: Every pull request and agent interaction MUST include the following:
+
+### 1. Playwright Test Execution
+- **ALWAYS** run the complete Playwright test suite before submitting a PR
+- Execute tests with: `npm run test:e2e` in the `angular-app/` directory
+- All tests must pass (16/16 passing)
+- Include test results in the PR description
+
+### 2. Responsive UI Screenshots
+**MANDATORY**: Capture screenshots for BOTH iPhone and Desktop views for ALL application screens:
+
+#### Required Screenshots (8 total):
+1. **Login Page**
+   - iPhone view (390x844px)
+   - Desktop view (1920x1080px)
+
+2. **Activities Dashboard**
+   - iPhone view (390x844px)
+   - Desktop view (1920x1080px)
+
+3. **Best Times Dashboard**
+   - iPhone view (390x844px)
+   - Desktop view (1920x1080px)
+
+4. **AI Analysis Dashboard**
+   - iPhone view (390x844px)
+   - Desktop view (1920x1080px)
+
+#### Screenshot Guidelines:
+- Use Playwright MCP server or browser_take_screenshot tool
+- Full page screenshots (not just viewport)
+- Save to `/screenshots/` directory with descriptive names:
+  - `login-iphone.png` / `login-desktop.png`
+  - `activities-iphone.png` / `activities-desktop.png`
+  - `best-times-iphone.png` / `best-times-desktop.png`
+  - `ai-analysis-iphone.png` / `ai-analysis-desktop.png`
+- Include screenshot URLs in PR description with proper sections
+
+### 3. PR Description Format
+Every PR description MUST include:
+
+```markdown
+## UI Screenshots - Responsive Views
+
+### 1. Login Page
+**iPhone (390x844)**:
+![Login iPhone](screenshot-url)
+
+**Desktop (1920x1080)**:
+![Login Desktop](screenshot-url)
+
+### 2. Activities Dashboard
+**iPhone (390x844)**:
+![Activities iPhone](screenshot-url)
+
+**Desktop (1920x1080)**:
+![Activities Desktop](screenshot-url)
+
+### 3. Best Times Dashboard
+**iPhone (390x844)**:
+![Best Times iPhone](screenshot-url)
+
+**Desktop (1920x1080)**:
+![Best Times Desktop](screenshot-url)
+
+### 4. AI Analysis Dashboard
+**iPhone (390x844)**:
+![AI Analysis iPhone](screenshot-url)
+
+**Desktop (1920x1080)**:
+![AI Analysis Desktop](screenshot-url)
+
+## Playwright Test Results
+```
+Running Agent Application
+  Login Flow
+    ✓ should display login page correctly
+    ✓ should have working Connect with Strava button
+    ...
+  16 passed (3.4s)
+```
+```
+
+### 4. Enforcement
+- PRs without screenshots and test results will be rejected
+- Agents must capture screenshots as part of their workflow
+- No exceptions - this applies to ALL code changes affecting UI
+
+---
 
 ## Angular Style Guide
 
