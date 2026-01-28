@@ -1,0 +1,99 @@
+<div class="activities-container">
+  <div class="activities-header">
+    <h2>Your Running Activities</h2>
+    <div class="search-box">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm"
+        (input)="onSearch()"
+        placeholder="Search activities..." />
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading activities...</p>
+  </div>
+
+  <div *ngIf="!loading && error" class="error-state">
+    <p>{{ error }}</p>
+    <button (click)="loadActivities()">Retry</button>
+  </div>
+
+  <div *ngIf="!loading && !error && filteredActivities.length === 0" class="empty-state">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+    </svg>
+    <h3>No activities found</h3>
+    <p *ngIf="searchTerm">Try a different search term</p>
+    <p *ngIf="!searchTerm">Start running and your activities will appear here!</p>
+  </div>
+
+  <div *ngIf="!loading && !error && filteredActivities.length > 0" class="activities-list">
+    <div class="activity-card" *ngFor="let activity of filteredActivities">
+      <div class="activity-header">
+        <div class="activity-title">
+          <h3>{{ activity.name }}</h3>
+          <span class="activity-type">{{ activity.sport_type }}</span>
+        </div>
+        <div class="activity-date">{{ formatDate(activity.start_date_local) }}</div>
+      </div>
+
+      <div class="activity-stats">
+        <div class="stat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12h18"></path>
+            <path d="M3 6h18"></path>
+            <path d="M3 18h18"></path>
+          </svg>
+          <div class="stat-value">
+            <span class="value">{{ formatDistance(activity.distance) }}</span>
+            <span class="label">Distance</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div class="stat-value">
+            <span class="value">{{ formatTime(activity.moving_time) }}</span>
+            <span class="label">Time</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <div class="stat-value">
+            <span class="value">{{ getPace(activity.distance, activity.moving_time) }}</span>
+            <span class="label">Pace</span>
+          </div>
+        </div>
+
+        <div class="stat" *ngIf="activity.total_elevation_gain">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 17 9 11 13 15 21 7"></polyline>
+            <polyline points="14 7 21 7 21 14"></polyline>
+          </svg>
+          <div class="stat-value">
+            <span class="value">{{ activity.total_elevation_gain.toFixed(0) }}m</span>
+            <span class="label">Elevation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-footer" *ngIf="activity.kudos_count > 0 || activity.comment_count > 0">
+        <span class="kudos">❤️ {{ activity.kudos_count }}</span>
+        <span class="comments">💬 {{ activity.comment_count }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+

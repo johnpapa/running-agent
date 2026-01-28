@@ -1,0 +1,181 @@
+<div class="training-analysis-container">
+  <div class="analysis-header">
+    <h2>🏃 AI-Powered Training Analysis</h2>
+    <p>Get personalized insights and improvement recommendations based on your training data</p>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Analyzing your training data...</p>
+  </div>
+
+  <div *ngIf="!loading && error" class="error-state">
+    <p>{{ error }}</p>
+    <button (click)="loadActivitiesAndAnalyze()">Retry</button>
+  </div>
+
+  <div *ngIf="!loading && !error && activities.length === 0" class="empty-state">
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+    </svg>
+    <h3>No Activities Found</h3>
+    <p>Start running and your activities will be analyzed here!</p>
+  </div>
+
+  <!-- Goal Assessment Section -->
+  <div *ngIf="!loading && activities.length > 0" class="section goal-section">
+    <h3>🎯 Goal Assessment</h3>
+    <p class="section-description">Is your goal realistic? Let AI help you find out!</p>
+    
+    <form #goalForm="ngForm" class="goal-inputs">
+      <div class="input-group">
+        <label for="currentTime">
+          Current Marathon Time <span class="required">*</span> (HH:MM:SS):
+        </label>
+        <input 
+          id="currentTime"
+          name="currentTime"
+          type="text" 
+          [(ngModel)]="currentMarathonTime"
+          #currentTimeInput="ngModel"
+          placeholder="3:24:00"
+          pattern="[0-9]{1,2}:[0-5][0-9]:[0-5][0-9]"
+          required
+          class="time-input"
+          [class.invalid]="currentTimeInput.invalid && currentTimeInput.touched" />
+        <div class="error-message" *ngIf="currentTimeInput.invalid && currentTimeInput.touched">
+          <span *ngIf="currentTimeInput.errors?.['required']">Current time is required</span>
+          <span *ngIf="currentTimeInput.errors?.['pattern']">Please use format HH:MM:SS (e.g., 3:24:00)</span>
+        </div>
+      </div>
+      
+      <div class="input-group">
+        <label for="targetTime">
+          Target Marathon Time <span class="required">*</span> (HH:MM:SS):
+        </label>
+        <input 
+          id="targetTime"
+          name="targetTime"
+          type="text" 
+          [(ngModel)]="targetMarathonTime"
+          #targetTimeInput="ngModel"
+          placeholder="3:15:00"
+          pattern="[0-9]{1,2}:[0-5][0-9]:[0-5][0-9]"
+          required
+          class="time-input"
+          [class.invalid]="targetTimeInput.invalid && targetTimeInput.touched" />
+        <div class="error-message" *ngIf="targetTimeInput.invalid && targetTimeInput.touched">
+          <span *ngIf="targetTimeInput.errors?.['required']">Target time is required</span>
+          <span *ngIf="targetTimeInput.errors?.['pattern']">Please use format HH:MM:SS (e.g., 3:15:00)</span>
+        </div>
+      </div>
+      
+      <button 
+        class="assess-btn" 
+        type="button"
+        (click)="assessGoal()"
+        [disabled]="goalForm.invalid || assessingGoal">
+        {{ assessingGoal ? 'Assessing...' : 'Assess My Goal' }}
+      </button>
+    </form>
+
+    <div *ngIf="goalAssessment" class="goal-result">
+      <div class="result-header" [style.background]="getConfidenceColor(goalAssessment.confidence)">
+        <h4>{{ goalAssessment.realistic ? '✅ Goal is Realistic!' : '⚠️ Goal May Be Challenging' }}</h4>
+        <div class="confidence-badge">
+          Confidence: {{ goalAssessment.confidence }}%
+        </div>
+      </div>
+      
+      <div class="result-content">
+        <p><strong>Time Frame:</strong> {{ goalAssessment.timeFrame }}</p>
+        <p><strong>Analysis:</strong> {{ goalAssessment.reasoning }}</p>
+        
+        <h5>Recommended Steps:</h5>
+        <ol class="steps-list">
+          <li *ngFor="let step of goalAssessment.recommendedSteps">{{ step }}</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- Training Effectiveness Section -->
+  <div *ngIf="!loading && analysis" class="section effectiveness-section">
+    <h3>💪 Training Effectiveness Analysis</h3>
+    <p class="section-description">{{ analysis.summary }}</p>
+
+    <div class="workouts-grid">
+      <div class="workout-category">
+        <h4>✨ Most Effective Workouts</h4>
+        <div class="workout-card" *ngFor="let workout of analysis.mostEffectiveWorkouts">
+          <div class="workout-header">
+            <span class="workout-name">{{ workout.activity.name }}</span>
+            <span class="effectiveness-badge" [style.background]="getEffectivenessColor(workout.effectiveness)">
+              {{ workout.effectiveness }}%
+            </span>
+          </div>
+          <div class="workout-details">
+            <p><strong>Date:</strong> {{ formatDate(workout.activity.start_date_local) }}</p>
+            <p><strong>Distance:</strong> {{ formatDistance(workout.activity.distance) }}</p>
+            <p><strong>Time:</strong> {{ formatTime(workout.activity.moving_time) }}</p>
+          </div>
+          <p class="workout-reason">{{ workout.reason }}</p>
+        </div>
+      </div>
+
+      <div class="workout-category">
+        <h4>⚠️ Least Effective Workouts</h4>
+        <div class="workout-card" *ngFor="let workout of analysis.leastEffectiveWorkouts">
+          <div class="workout-header">
+            <span class="workout-name">{{ workout.activity.name }}</span>
+            <span class="effectiveness-badge" [style.background]="getEffectivenessColor(workout.effectiveness)">
+              {{ workout.effectiveness }}%
+            </span>
+          </div>
+          <div class="workout-details">
+            <p><strong>Date:</strong> {{ formatDate(workout.activity.start_date_local) }}</p>
+            <p><strong>Distance:</strong> {{ formatDistance(workout.activity.distance) }}</p>
+            <p><strong>Time:</strong> {{ formatTime(workout.activity.moving_time) }}</p>
+          </div>
+          <p class="workout-reason">{{ workout.reason }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Improvement Suggestions Section -->
+  <div *ngIf="!loading && improvementAdvice.length > 0" class="section improvement-section">
+    <h3>🚀 How to Get Faster</h3>
+    <p class="section-description">Personalized recommendations based on your training</p>
+    
+    <div class="advice-list">
+      <div class="advice-card" *ngFor="let advice of improvementAdvice; let i = index">
+        <div class="advice-number">{{ i + 1 }}</div>
+        <div class="advice-content">{{ advice }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Insights -->
+  <div *ngIf="!loading && analysis" class="section insights-section">
+    <h3>📊 Key Insights</h3>
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon">📈</div>
+        <h5>Training Volume</h5>
+        <p>{{ activities.length }} runs analyzed</p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">⏱️</div>
+        <h5>Total Time</h5>
+        <p>{{ formatTime(getTotalTime()) }}</p>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🏃</div>
+        <h5>Total Distance</h5>
+        <p>{{ formatDistance(getTotalDistance()) }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+

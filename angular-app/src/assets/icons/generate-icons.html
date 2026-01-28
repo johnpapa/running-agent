@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Icon Generator for Running Agent</title>
+</head>
+<body>
+  <h1>Generate PWA Icons for Running Agent</h1>
+  <p>Use this HTML file to generate icons. Open in browser and use browser dev tools to save canvas as PNG.</p>
+  
+  <div id="canvases"></div>
+  
+  <script>
+    const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+    const container = document.getElementById('canvases');
+    
+    sizes.forEach(size => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      canvas.id = `icon-${size}x${size}`;
+      
+      const ctx = canvas.getContext('2d');
+      
+      // Background gradient
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#fc4c02');
+      gradient.addColorStop(1, '#d84315');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+      
+      // Border radius
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.beginPath();
+      ctx.roundRect(0, 0, size, size, size * 0.15);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+      
+      // Running figure emoji
+      ctx.font = `${size * 0.5}px Arial`;
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('🏃', size / 2, size / 2);
+      
+      const div = document.createElement('div');
+      div.style.marginBottom = '20px';
+      
+      const title = document.createElement('h3');
+      title.textContent = `${size}x${size}`;
+      
+      const link = document.createElement('a');
+      link.textContent = 'Download';
+      link.download = `icon-${size}x${size}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.style.display = 'block';
+      link.style.marginTop = '10px';
+      
+      div.appendChild(title);
+      div.appendChild(canvas);
+      div.appendChild(link);
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>

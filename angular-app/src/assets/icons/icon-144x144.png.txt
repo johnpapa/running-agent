@@ -1,0 +1,4 @@
+This is a placeholder for icon-144x144.png
+In production, replace with actual PNG files showing the Running Agent logo/icon
+The icon should be 144x144 pixels
+Recommended colors: #fc4c02 (Strava orange) or gradient

@@ -1,0 +1,182 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { AiAnalysisService, TrainingAnalysis as AnalysisResult, GoalAssessment } from './ai-analysis.service';
+import { StravaService } from '../../core/api/strava.service';
+import { Activity } from '../../core/api/strava.models';
+
+@Component({
+  selector: 'app-training-analysis',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './training-analysis.component.html',
+  styleUrl: './training-analysis.component.scss',
+})
+export class TrainingAnalysisComponent implements OnInit {
+  activities: Activity[] = [];
+  analysis: AnalysisResult | null = null;
+  goalAssessment: GoalAssessment | null = null;
+  improvementAdvice: string[] = [];
+  loading = false;
+  error: string | null = null;
+  assessingGoal = false;
+
+  // Goal assessment inputs
+  currentMarathonTime = '3:24:00'; // Example: 3 hours 24 minutes
+  targetMarathonTime = '3:15:00';  // Example: 3 hours 15 minutes
+
+  constructor(
+    private aiService: AiAnalysisService,
+    private stravaService: StravaService
+  ) {}
+
+  getTotalDistance(): number {
+    return this.activities.reduce((sum, a) => sum + a.distance, 0);
+  }
+
+  getTotalTime(): number {
+    return this.activities.reduce((sum, a) => sum + a.moving_time, 0);
+  }
+
+
+  ngOnInit(): void {
+    this.loadActivitiesAndAnalyze();
+  }
+
+  loadActivitiesAndAnalyze(): void {
+    this.loading = true;
+    this.error = null;
+
+    this.stravaService.getAllActivities().subscribe({
+      next: (activities) => {
+        this.activities = activities.filter(a => a.type === 'Run' || a.sport_type === 'Run');
+        this.analyzeTraining();
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to load activities';
+        console.error('Error loading activities:', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  analyzeTraining(): void {
+    if (this.activities.length === 0) {
+      this.error = 'No activities to analyze';
+      return;
+    }
+
+    this.loading = true;
+
+    // Analyze training effectiveness
+    this.aiService.analyzeTrainingEffectiveness(this.activities).subscribe({
+      next: (analysis) => {
+        this.analysis = analysis;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error analyzing training:', err);
+        this.loading = false;
+      }
+    });
+
+    // Get improvement advice
+    this.aiService.getImprovementAdvice(this.activities).subscribe({
+      next: (advice) => {
+        this.improvementAdvice = advice;
+      },
+      error: (err) => {
+        console.error('Error getting improvement advice:', err);
+      }
+    });
+  }
+
+  assessGoal(): void {
+    const currentSeconds = this.timeStringToSeconds(this.currentMarathonTime);
+    const targetSeconds = this.timeStringToSeconds(this.targetMarathonTime);
+
+    // Validate times are valid numbers
+    if (isNaN(currentSeconds) || isNaN(targetSeconds)) {
+      this.error = 'Please enter valid time in HH:MM:SS format';
+      return;
+    }
+
+    // Target must be faster (fewer seconds) than current
+    if (targetSeconds >= currentSeconds) {
+      this.error = 'Target time must be faster (less time) than current time';
+      return;
+    }
+
+    this.assessingGoal = true;
+    this.error = null;
+
+    this.aiService.assessGoal(
+      currentSeconds,
+      targetSeconds,
+      'Marathon',
+      this.activities
+    ).subscribe({
+      next: (assessment) => {
+        this.goalAssessment = assessment;
+        this.assessingGoal = false;
+      },
+      error: (err) => {
+        this.error = 'Failed to assess goal';
+        console.error('Error assessing goal:', err);
+        this.assessingGoal = false;
+      }
+    });
+  }
+
+  private timeStringToSeconds(timeStr: string): number {
+    if (!timeStr || typeof timeStr !== 'string') {
+      return NaN;
+    }
+    
+    const parts = timeStr.split(':').map(p => parseInt(p, 10));
+    
+    // Validate all parts are valid numbers
+    if (parts.some(p => isNaN(p))) {
+      return NaN;
+    }
+    
+    if (parts.length === 3) {
+      return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    } else if (parts.length === 2) {
+      return parts[0] * 60 + parts[1];
+    }
+    
+    const singleValue = parseInt(timeStr, 10);
+    return isNaN(singleValue) ? NaN : singleValue;
+  }
+
+  formatDistance(meters: number): string {
+    return this.stravaService.formatDistance(meters);
+  }
+
+  formatTime(seconds: number): string {
+    return this.stravaService.formatTime(seconds);
+  }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric'
+    });
+  }
+
+  getEffectivenessColor(effectiveness: number): string {
+    if (effectiveness >= 80) return '#4caf50'; // green
+    if (effectiveness >= 60) return '#ff9800'; // orange
+    return '#f44336'; // red
+  }
+
+  getConfidenceColor(confidence: number): string {
+    if (confidence >= 70) return '#4caf50'; // green
+    if (confidence >= 50) return '#ff9800'; // orange
+    return '#f44336'; // red
+  }
+}
+

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running Agent - Best Times (iPhone)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .runner-icon {
+            font-size: 24px;
+        }
+
+        .app-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fc4c02;
+        }
+
+        .logout-btn {
+            background: #fc4c02;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .tabs {
+            background: white;
+            display: flex;
+            padding: 12px;
+            gap: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .tab.active {
+            background: #fc4c02;
+            color: white;
+        }
+
+        .content {
+            padding: 20px 16px;
+            overflow-y: auto;
+            height: calc(844px - 120px);
+        }
+
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-header h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .page-header p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* SINGLE COLUMN GRID - 1 ITEM PER ROW */
+        .best-times-grid {
+            display: grid;
+            grid-template-columns: 1fr;  /* ONLY 1 COLUMN */
+            gap: 16px;
+        }
+
+        .best-time-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            width: 100%;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #fc4c02 0%, #d84315 100%);
+            color: white;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .distance-badge {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .card-header h3 {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .card-content {
+            padding: 20px 18px;
+        }
+
+        .time-display {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .time-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .pace-value {
+            font-size: 15px;
+            color: #fc4c02;
+            font-weight: 600;
+        }
+
+        .activity-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .info-row svg {
+            flex-shrink: 0;
+            width: 18px;
+            height: 18px;
+            color: #999;
+        }
+
+        .activity-name {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-section">
+            <span class="runner-icon">🏃</span>
+            <span class="app-name">Running Agent</span>
+        </div>
+        <button class="logout-btn">Logout</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab">📊 Activities</button>
+        <button class="tab active">⚡ Best Times</button>
+        <button class="tab">🤖 AI Analysis</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <div class="page-header">
+            <h2>Your Best Times</h2>
+            <p>Your fastest recorded times for standard running distances</p>
+        </div>
+
+        <!-- SINGLE COLUMN GRID - 1 ITEM PER ROW -->
+        <div class="best-times-grid">
+            <!-- 1 Mile -->
+            <div class="best-time-card">
+                <div class="card-header">
+                    <div class="distance-badge">⭐</div>
+                    <h3>1 Mile</h3>
+                </div>
+                <div class="card-content">
+                    <div class="time-display">
+                        <div class="time-value">5:42</div>
+                        <div class="pace-value">3:33/km</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span>Sep 5, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <span class="activity-name">Track Time Trial</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5K -->
+            <div class="best-time-card">
+                <div class="card-header">
+                    <div class="distance-badge">⭐</div>
+                    <h3>5K</h3>
+                </div>
+                <div class="card-content">
+                    <div class="time-display">
+                        <div class="time-value">21:45</div>
+                        <div class="pace-value">4:21/km</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span>Dec 15, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <span class="activity-name">City 5K Race</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10K -->
+            <div class="best-time-card">
+                <div class="card-header">
+                    <div class="distance-badge">⭐</div>
+                    <h3>10K</h3>
+                </div>
+                <div class="card-content">
+                    <div class="time-display">
+                        <div class="time-value">45:30</div>
+                        <div class="pace-value">4:33/km</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span>Nov 20, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <span class="activity-name">Turkey Trot 10K</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 15K -->
+            <div class="best-time-card">
+                <div class="card-header">
+                    <div class="distance-badge">⭐</div>
+                    <h3>15K</h3>
+                </div>
+                <div class="card-content">
+                    <div class="time-display">
+                        <div class="time-value">1:08:15</div>
+                        <div class="pace-value">4:33/km</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span>Aug 20, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <span class="activity-name">Summer 15K</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Half Marathon -->
+            <div class="best-time-card">
+                <div class="card-header">
+                    <div class="distance-badge">⭐</div>
+                    <h3>Half Marathon</h3>
+                </div>
+                <div class="card-content">
+                    <div class="time-display">
+                        <div class="time-value">1:38:20</div>
+                        <div class="pace-value">4:39/km</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span>Oct 10, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <span class="activity-name">City Half Marathon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marathon -->
+            <div class="best-time-card">
+                <div class="card-header">
+                    <div class="distance-badge">⭐</div>
+                    <h3>Marathon</h3>
+                </div>
+                <div class="card-content">
+                    <div class="time-display">
+                        <div class="time-value">3:24:30</div>
+                        <div class="pace-value">4:52/km</div>
+                    </div>
+                    <div class="activity-info">
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                <line x1="16" y1="2" x2="16" y2="6"></line>
+                                <line x1="8" y1="2" x2="8" y2="6"></line>
+                                <line x1="3" y1="10" x2="21" y2="10"></line>
+                            </svg>
+                            <span>May 15, 2025</span>
+                        </div>
+                        <div class="info-row">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                            <span class="activity-name">Spring Marathon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

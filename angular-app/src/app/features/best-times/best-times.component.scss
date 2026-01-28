@@ -1,0 +1,360 @@
+.best-times-container {
+  max-height: 70vh;
+  overflow-y: auto;
+  // Ensure container respects viewport
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+
+  @media (max-width: 768px) {
+    max-height: none;
+  }
+
+  @media (max-width: 600px) {
+    // Add small padding on mobile to prevent edge-to-edge content
+    padding: 0 4px;
+  }
+}
+
+.best-times-header {
+  margin-bottom: 32px;
+
+  h2 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 24px;
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+    }
+  }
+
+  p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+
+    @media (max-width: 768px) {
+      font-size: 13px;
+    }
+  }
+}
+
+.loading-state,
+.error-state,
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+
+  .spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #fc4c02;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+      border-width: 3px;
+    }
+  }
+
+  svg {
+    color: #ccc;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
+  }
+
+  p {
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
+  button {
+    margin-top: 20px;
+    padding: 10px 24px;
+    background-color: #fc4c02;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    min-height: 44px;
+
+    &:hover {
+      background-color: #d84315;
+    }
+
+    @media (max-width: 480px) {
+      padding: 10px 20px;
+      font-size: 13px;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.best-times-grid {
+  display: grid;
+  // Default: 3 columns on large desktop
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+
+  // Medium screens (laptop/large tablet): 2 columns
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  // CRITICAL: Small screens (tablet/phone): ONLY 1 column
+  // Force single column below 900px to ensure mobile gets 1 item per row
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  // Extra enforcement for phones
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+  }
+}
+
+.best-time-card {
+  border: 2px solid #e0e0e0;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  // Ensure card never overflows viewport
+  max-width: 100%;
+  width: 100%;
+
+  &:hover {
+    border-color: #fc4c02;
+    box-shadow: 0 8px 24px rgba(252, 76, 2, 0.15);
+    transform: translateY(-4px);
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 12px;
+  }
+
+  @media (max-width: 600px) {
+    // Ensure cards fit on mobile screens
+    min-width: 0;
+  }
+}
+
+.card-header {
+  background: linear-gradient(135deg, #fc4c02 0%, #d84315 100%);
+  color: white;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  // Prevent overflow
+  min-width: 0;
+  width: 100%;
+
+  .distance-badge {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    svg {
+      stroke: white;
+      fill: white;
+    }
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+    // Allow text to shrink if needed
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    @media (max-width: 768px) {
+      font-size: 18px;
+    }
+
+    @media (max-width: 600px) {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+    gap: 10px;
+
+    .distance-badge {
+      width: 36px;
+      height: 36px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 18px;
+    gap: 12px;
+
+    .distance-badge {
+      width: 40px;
+      height: 40px;
+
+      svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+}
+
+.card-content {
+  padding: 24px 20px;
+  // Ensure content doesn't overflow
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 20px 16px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 20px 18px;
+  }
+}
+
+.time-display {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+
+  .time-value {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+    // Prevent overflow
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    @media (max-width: 768px) {
+      font-size: 30px;
+    }
+
+    @media (max-width: 600px) {
+      font-size: 32px;
+    }
+  }
+
+  .pace-value {
+    font-size: 16px;
+    color: #fc4c02;
+    font-weight: 600;
+    // Prevent overflow
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+
+    @media (max-width: 768px) {
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
+
+.activity-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 14px;
+  // Prevent overflow of entire row
+  min-width: 0;
+  width: 100%;
+
+  svg {
+    color: #999;
+    flex-shrink: 0;
+
+    @media (max-width: 600px) {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .activity-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // Ensure min-width is 0 to allow flexbox shrinking
+    min-width: 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+    gap: 10px;
+  }
+}
